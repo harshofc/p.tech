@@ -1,462 +1,185 @@
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parinda Study Management</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Tiger ❤️ | From Ashi</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f5f9;
- color:#172554;
+ margin:0;text-align:center;
+ font-family:Georgia,serif;
+ color:#a52d61;
+ background:linear-gradient(145deg,#fff5fa,#ffd9e9,#fff0f6);
+ overflow-x:hidden;
 }
-header{
- background:linear-gradient(120deg,#1d4ed8,#6366f1);
- color:white;padding:25px 7%;
-}
-header h1{margin:0 0 8px}
-.container{max-width:1150px;margin:25px auto;padding:0 18px}
-.panel,.card{
- background:white;padding:20px;border-radius:12px;
- border:1px solid #e5e7eb;margin-bottom:18px;
-}
-.stats{
- display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
-}
-.card p{color:#64748b;font-size:14px}
-.card h2{margin:5px 0}
-input,select{
- padding:11px;border:1px solid #cbd5e1;
- border-radius:7px;margin:5px;font-size:14px;
+section{padding:65px 18px;min-height:65vh}
+.hero{min-height:100vh;display:flex;flex-direction:column;
+justify-content:center;align-items:center}
+h1{font-size:clamp(40px,10vw,68px);margin:15px 0}
+h2{font-size:30px}
+p{line-height:1.8;font-size:17px}
+.card{
+ max-width:600px;margin:20px auto;padding:28px;
+ background:#ffffffc9;border:1px solid white;
+ border-radius:25px;
+ box-shadow:0 8px 30px #d65c9020;
 }
 button{
- border:0;padding:10px 14px;border-radius:7px;
- color:white;cursor:pointer;margin:3px;
+ background:#e84d88;color:white;border:0;
+ padding:14px 25px;border-radius:30px;
+ font-size:16px;cursor:pointer;margin:12px;
 }
-button:hover{opacity:.85}
-.blue{background:#2563eb}
-.green{background:#16a34a}
-.red{background:#dc2626}
-.purple{background:#7c3aed}
-.gray{background:#64748b}
-.tabs{margin:20px 0}
-.tabs button{background:#334155}
-.tabs button.active{background:#2563eb}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{
- padding:14px;text-align:left;border-bottom:1px solid #e5e7eb;
+button:hover{background:#bc3169}
+.heart{font-size:55px;animation:beat 1s infinite}
+@keyframes beat{50%{transform:scale(1.2)}}
+.cake{font-size:100px}
+#secret{display:none;font-size:20px}
+.float{
+ position:fixed;bottom:-40px;pointer-events:none;
+ animation:up 7s linear forwards;z-index:5
 }
-th{background:#f8fafc;color:#64748b;font-size:12px}
-.status{font-weight:bold}
-.paid{color:#16a34a}
-.partial{color:#d97706}
-.unpaid{color:#dc2626}
-.footer{text-align:center;padding:25px;color:#64748b}
-@media(max-width:700px){
- .stats{grid-template-columns:repeat(2,1fr)}
- header{padding:20px}
- .panel,.card{padding:14px}
+@keyframes up{
+ to{transform:translateY(-110vh) rotate(360deg);opacity:0}
 }
+footer{padding:30px}
 </style>
 </head>
-
 <body>
 
-<header>
-<h1>📚 Parinda Study</h1>
-<p>Student Attendance & Monthly Fees Management</p>
-</header>
-
-<div class="container">
-
-<div class="tabs">
-<button class="active" onclick="showPage('attendance',this)">Attendance</button>
-<button onclick="showPage('fees',this)">Monthly Fees</button>
-</div>
-
-<!-- ATTENDANCE -->
-
-<section id="attendance">
-
-<h2>Attendance Dashboard</h2>
-
-<div class="stats">
-<div class="card"><p>Total Students</p><h2 id="total">0</h2></div>
-<div class="card"><p>Present</p><h2 id="present">0</h2></div>
-<div class="card"><p>Absent</p><h2 id="absent">0</h2></div>
-<div class="card"><p>Attendance Rate</p><h2 id="rate">0%</h2></div>
-</div>
-
-<div class="panel">
-<h2>Student Management</h2>
-
-<input id="studentName" placeholder="Student Name">
-<button class="blue" onclick="addStudent()">+ Add Student</button>
-
-<br>
-<input id="search" placeholder="Search student..." oninput="render()">
-<input type="date" id="date">
-
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>No.</th>
-<th>Student Name</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="studentList"></tbody>
-</table>
-</div>
-</div>
+<section class="hero">
+ <div class="heart">💗</div>
+ <p>A SPECIAL SURPRISE FOR MY LOVE</p>
+ <h1>Happy Birthday<br>My Tiger 🐯</h1>
+ <h2>My Baby, My Husband, My Forever ❤️</h2>
+ <p>With endless love, Your Wife Ashi 💍</p>
+ <button onclick="document.getElementById('welcome').scrollIntoView({behavior:'smooth'})">
+ Open Your Surprise 💌
+ </button>
 </section>
 
-<!-- MONTHLY FEES -->
-
-<section id="fees" style="display:none">
-
-<h2>Monthly Fees Dashboard</h2>
-
-<div class="panel">
-<label>Select Month:</label>
-<select id="month" onchange="renderFees()">
-</select>
-</div>
-
-<div class="stats">
-<div class="card"><p>Total Fees</p><h2 id="totalFees">₹0</h2></div>
-<div class="card"><p>Collected Fees</p><h2 id="collected">₹0</h2></div>
-<div class="card"><p>Pending Fees</p><h2 id="pending">₹0</h2></div>
-<div class="card"><p>Total Students</p><h2 id="feeStudents">0</h2></div>
-</div>
-
-<div class="panel">
-<h2>Monthly Student Fees</h2>
-
-<input id="feeSearch" placeholder="Search student..." oninput="renderFees()">
-
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Student</th>
-<th>Monthly Fees</th>
-<th>Paid</th>
-<th>Remaining</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="feeList"></tbody>
-</table>
-</div>
-</div>
-
-<div class="panel">
-<h2>Payment History</h2>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Student</th>
-<th>Month</th>
-<th>Amount</th>
-<th>Payment Date</th>
-</tr>
-</thead>
-<tbody id="history"></tbody>
-</table>
-</div>
-</div>
-
+<section id="welcome">
+ <h2>Hey My Love! 🥹</h2>
+ <div class="card">
+  <p>Welcome to your little birthday world, Tiger!</p>
+  <p>Today is all about you. I made this little surprise with so much love, just for my favourite person. ❤️</p>
+  <p>You are my happiness, my smile and my forever.</p>
+ </div>
 </section>
 
-</div>
+<section>
+ <h2>🎂 Happy Birthday Baby!</h2>
+ <div class="card">
+  <div class="cake" id="cake">🎂</div>
+  <p>Close your eyes, make a wish and blow your candles!</p>
+  <button onclick="celebrate()">Blow The Candles 🕯️</button>
+  <p id="wish"></p>
+ </div>
+</section>
 
-<div class="footer">
-© 2026 Parinda Study | Learn • Grow • Succeed
-</div>
+<section>
+ <h2>💌 A Letter From Your Wife</h2>
+ <div class="card">
+  <h3>Dear My Tiger ❤️</h3>
+  <p>
+   Happy Birthday, my baby!
+   Tum meri life ka sabse beautiful part ho.
+   Tumhari smile meri favourite hai aur
+   tumhara saath meri sabse pyari feeling.
+  </p>
+  <p>
+   Main chahti hoon tumhari life hamesha
+   khushiyon se bhari rahe. Tumhare har
+   sapne poore hon aur tum kabhi udaas na ho.
+  </p>
+  <p>
+   Main har janam mein tumhari hi Ashi
+   banna chahti hoon. Tum mere aaj bhi ho
+   aur mere har aane wale kal bhi. 💗
+  </p>
+  <h3>Forever Yours,<br>Your Wife Ashi 💍</h3>
+ </div>
+</section>
+
+<section>
+ <h2>🌸 Our Love Story</h2>
+ <div class="card">
+  <h3>Two Hearts, One Forever ❤️</h3>
+  <p>Some people become a beautiful part of life...</p>
+  <p>And some become the whole world.</p>
+  <p>You are my whole world, Tiger. 🐯</p>
+  <div class="heart">💕</div>
+ </div>
+</section>
+
+<section>
+ <h2>🎶 A Song For You</h2>
+ <div class="card">
+  <p>Choose a song that reminds you of us.</p>
+  <input type="file" id="music" accept="audio/*">
+  <br>
+  <audio id="player" controls style="width:100%;margin-top:15px"></audio>
+ </div>
+</section>
+
+<section>
+ <h2>🎁 Your Last Surprise</h2>
+ <div class="card">
+  <p>Baby, there is one thing I want you to know...</p>
+  <button onclick="showLove()">Open My Heart ❤️</button>
+  <div id="secret">
+   <div class="heart">💗</div>
+   My Tiger, you are my favourite person,
+   my biggest happiness and my forever love.
+   <br><br>
+   I want to hold your hand through every
+   season of life.
+   <br><br>
+   Har janam mein tumhari Ashi banna hai.
+   <br><br>
+   I LOVE YOU SO MUCH, MY HUSBAND! 💍
+   <br><br>
+   Forever & Always,<br>
+   YOUR WIFE ASHI 💋
+  </div>
+ </div>
+</section>
+
+<footer>
+ Made with infinite love ❤️<br>
+ ASHI ♡ TIGER<br>
+ Forever & Always 💍
+</footer>
 
 <script>
-
-let students=JSON.parse(localStorage.getItem("ps_students"))||[];
-let attendance=JSON.parse(localStorage.getItem("ps_attendance"))||{};
-let fees=JSON.parse(localStorage.getItem("ps_fees"))||{};
-
-let nextId=Math.max(0,...students.map(s=>s.id))+1;
-
-let months=[
-"January","February","March","April",
-"May","June","July","August",
-"September","October","November","December"
-];
-
-let month=document.getElementById("month");
-
-months.forEach((m,i)=>{
-let option=document.createElement("option");
-option.value=new Date().getFullYear()+"-"+String(i+1).padStart(2,"0");
-option.textContent=m+" "+new Date().getFullYear();
-month.appendChild(option);
+function celebrate(){
+ document.getElementById('cake').innerHTML='🍰✨';
+ document.getElementById('wish').innerHTML=
+ 'Happy Birthday, My Tiger! 🎉❤️ May all your dreams come true!';
+ for(let i=0;i<20;i++) hearts();
+}
+function showLove(){
+ document.getElementById('secret').style.display='block';
+ for(let i=0;i<15;i++)hearts();
+}
+function hearts(){
+ const h=document.createElement('div');
+ h.className='float';
+ h.innerHTML=['💗','💕','❤️','🌸','💖'][Math.floor(Math.random()*5)];
+ h.style.left=Math.random()*100+'vw';
+ h.style.fontSize=(20+Math.random()*25)+'px';
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),7000);
+}
+setInterval(hearts,900);
+document.getElementById('music').addEventListener('change',function(){
+ if(this.files[0]){
+  const p=document.getElementById('player');
+  p.src=URL.createObjectURL(this.files[0]);
+  p.play();
+ }
 });
-
-month.value=new Date().getFullYear()+"-"+String(new Date().getMonth()+1).padStart(2,"0");
-
-let date=document.getElementById("date");
-date.value=new Date().toLocaleDateString("en-CA");
-
-function save(){
-localStorage.setItem("ps_students",JSON.stringify(students));
-localStorage.setItem("ps_attendance",JSON.stringify(attendance));
-localStorage.setItem("ps_fees",JSON.stringify(fees));
-}
-
-function showPage(page,btn){
-document.getElementById("attendance").style.display=
-page==="attendance"?"block":"none";
-
-document.getElementById("fees").style.display=
-page==="fees"?"block":"none";
-
-document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-btn.classList.add("active");
-
-render();
-renderFees();
-}
-
-function addStudent(){
-let name=document.getElementById("studentName").value.trim();
-
-if(!name)return alert("Enter student name");
-
-if(students.some(s=>s.name.toLowerCase()===name.toLowerCase()))
-return alert("Student already exists!");
-
-students.push({id:nextId++,name:name});
-document.getElementById("studentName").value="";
-
-save();
-render();
-renderFees();
-}
-
-function deleteStudent(id){
-let s=students.find(x=>x.id===id);
-if(!s || !confirm("Delete "+s.name+"?"))return;
-
-students=students.filter(x=>x.id!==id);
-
-Object.values(attendance).forEach(r=>delete r[id]);
-delete fees[id];
-
-save();
-render();
-renderFees();
-}
-
-function render(){
-
-let list=document.getElementById("studentList");
-list.innerHTML="";
-
-let record=attendance[date.value]||{};
-let query=document.getElementById("search").value.toLowerCase();
-
-students.filter(s=>s.name.toLowerCase().includes(query))
-.forEach((s,i)=>{
-
-let status=record[s.id]||"Not Marked";
-let tr=document.createElement("tr");
-
-tr.innerHTML=`
-<td>${i+1}</td>
-<td></td>
-<td>${status}</td>
-<td>
-<button class="green" onclick="mark(${s.id},'Present')">Present</button>
-<button class="red" onclick="mark(${s.id},'Absent')">Absent</button>
-<button class="gray" onclick="deleteStudent(${s.id})">Delete</button>
-</td>`;
-
-tr.children[1].textContent=s.name;
-list.appendChild(tr);
-});
-
-let values=students.map(s=>record[s.id]);
-let p=values.filter(v=>v==="Present").length;
-let a=values.filter(v=>v==="Absent").length;
-let marked=p+a;
-
-document.getElementById("total").textContent=students.length;
-document.getElementById("present").textContent=p;
-document.getElementById("absent").textContent=a;
-document.getElementById("rate").textContent=
-(marked?Math.round(p/marked*100):0)+"%";
-}
-
-function mark(id,status){
-if(!attendance[date.value])attendance[date.value]={};
-attendance[date.value][id]=status;
-save();
-render();
-}
-
-date.addEventListener("change",render);
-
-function getFee(id){
-if(!fees[id])fees[id]={monthly:0,records:{}};
-if(!fees[id].records)fees[id].records={};
-return fees[id];
-}
-
-function renderFees(){
-
-let list=document.getElementById("feeList");
-let history=document.getElementById("history");
-
-list.innerHTML="";
-history.innerHTML="";
-
-let total=0,collected=0;
-let selectedMonth=month.value;
-let query=document.getElementById("feeSearch").value.toLowerCase();
-
-students.filter(s=>s.name.toLowerCase().includes(query))
-.forEach(s=>{
-
-let f=getFee(s.id);
-let r=f.records[selectedMonth]||{paid:0,payments:[]};
-
-let remaining=Math.max(0,f.monthly-r.paid);
-
-let status=f.monthly===0?"Not Set":
-r.paid>=f.monthly?"Paid":
-r.paid>0?"Partial":"Unpaid";
-
-total+=f.monthly;
-collected+=r.paid;
-
-let tr=document.createElement("tr");
-
-let cells=[
-s.name,"₹"+f.monthly,"₹"+r.paid,
-"₹"+remaining,status
-];
-
-cells.forEach((value,i)=>{
-let td=document.createElement("td");
-td.textContent=value;
-if(i===4){
-td.className=status==="Paid"?"paid":
-status==="Partial"?"partial":"unpaid";
-}
-tr.appendChild(td);
-});
-
-let action=document.createElement("td");
-
-let set=document.createElement("button");
-set.className="purple";
-set.textContent="Set Fees";
-
-set.onclick=()=>{
-let amount=prompt("Enter monthly fees:",f.monthly);
-if(amount===null)return;
-
-amount=Number(amount);
-
-if(!Number.isFinite(amount)||amount<0)
-return alert("Enter valid fees");
-
-if(amount<r.paid)
-return alert("Fees cannot be less than already paid amount");
-
-f.monthly=amount;
-save();
-renderFees();
-};
-
-let pay=document.createElement("button");
-pay.className="green";
-pay.textContent="Add Payment";
-
-pay.onclick=()=>{
-if(f.monthly<=0)return alert("First set monthly fees");
-
-let amount=prompt("Enter payment amount:",remaining);
-if(amount===null)return;
-
-amount=Number(amount);
-
-if(!Number.isFinite(amount)||amount<=0)
-return alert("Enter valid payment");
-
-if(r.paid+amount>f.monthly)
-return alert("Payment is greater than remaining fees");
-
-r.paid+=amount;
-
-r.payments.push({
-amount:amount,
-date:new Date().toLocaleDateString("en-IN")
-});
-
-f.records[selectedMonth]=r;
-
-save();
-renderFees();
-};
-
-action.append(set,pay);
-tr.appendChild(action);
-list.appendChild(tr);
-
-});
-
-// Payment History
-
-students.forEach(s=>{
-let f=getFee(s.id);
-
-Object.entries(f.records).forEach(([m,r])=>{
-(r.payments||[]).forEach(payment=>{
-
-let tr=document.createElement("tr");
-
-[s.name,formatMonth(m),"₹"+payment.amount,payment.date]
-.forEach(value=>{
-let td=document.createElement("td");
-td.textContent=value;
-tr.appendChild(td);
-});
-
-history.appendChild(tr);
-
-});
-});
-});
-
-document.getElementById("totalFees").textContent="₹"+total;
-document.getElementById("collected").textContent="₹"+collected;
-document.getElementById("pending").textContent="₹"+(total-collected);
-document.getElementById("feeStudents").textContent=students.length;
-
-}
-
-function formatMonth(value){
-let [year,m]=value.split("-");
-return months[Number(m)-1]+" "+year;
-}
-
-render();
-renderFees();
-
 </script>
 </body>
 </html>
